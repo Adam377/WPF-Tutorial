@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -15,15 +17,18 @@ using System.Windows.Shapes;
 
 namespace WPF_Tutorial.View.UserControls
 {
-    public partial class ClearableTextBox : UserControl
+    public partial class ClearableTextBox : UserControl, INotifyPropertyChanged
     {
         #region Members
         private string _placeholder;
+
+        public event PropertyChangedEventHandler? PropertyChanged;
         #endregion
 
         #region Constructor
         public ClearableTextBox()
         {
+            DataContext = this;
             InitializeComponent();
         }
         #endregion
@@ -53,8 +58,13 @@ namespace WPF_Tutorial.View.UserControls
             set
             {
                 _placeholder = value;
-                tbPlaceholder.Text = _placeholder;
+                OnPropertyChanged();
             }
+        }
+
+        private void OnPropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
     }
