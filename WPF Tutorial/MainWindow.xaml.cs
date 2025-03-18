@@ -11,13 +11,29 @@ using System.Windows.Shapes;
 
 namespace WPF_Tutorial;
 
-/// <summary>
-/// Interaction logic for MainWindow.xaml
-/// </summary>
 public partial class MainWindow : Window
 {
+    private bool _running = false;
     public MainWindow()
     {
         InitializeComponent();
+    }
+
+    private void btnToggleRun_Click(object sender, RoutedEventArgs e)
+    {
+        if (_running)
+        {
+            // stop
+            tbStatus.Text = "Stopped";
+            btnToggleRun.Content = "Run";
+        }
+        else
+        {
+            // run
+            tbStatus.Text = "Running";
+            btnToggleRun.Content = "Stop";
+        }
+
+        _running = !_running;
     }
 }
